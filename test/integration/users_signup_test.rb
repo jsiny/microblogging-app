@@ -8,6 +8,9 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
       post users_path, params: { user: {name: "", email: "usr@invalid", password: "foo", password_confirmation: "bar" } }
     end
     assert_template "users/new"
+    assert_select 'div#error_explanation'
+    assert_select 'div.alert.alert-danger'
+    assert_select 'form[action="/signup"]'
   end
 
 end
