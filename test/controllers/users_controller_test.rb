@@ -5,6 +5,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael)
     @other_user = users(:archer)
+    @non_auth_user = users(:lana)
   end
   
   test "should get new" do
@@ -52,4 +53,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to root_url
   end
+  
+  test "should not display a user that was not authenticated" do
+    log_in_as(@user)
+    get user_path(@non_auth_user)
+    assert_redirected_to root_url
+  end
+  
 end
