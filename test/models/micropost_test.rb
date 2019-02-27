@@ -26,4 +26,8 @@ class MicropostTest < ActiveSupport::TestCase
     assert_not @micropost.valid?
   end
   
+  test "should be the most recent post first" do
+    assert_equal microposts(:most_recent), Micropost.first
+  end
+  
 end
