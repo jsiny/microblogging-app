@@ -1,9 +1,9 @@
 <% if logged_in? %>
 
-  <%= render 'publish_area' %>
+  <%= render 'shared/logged_in_home' %>
 
 <% else %>
 
-  <%= render 'logged_out_home' %>
+  <%= render 'shared/logged_out_home' %>
 
 <% end %>
