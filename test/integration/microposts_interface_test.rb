@@ -11,6 +11,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get root_url
     assert_select 'div.pagination'
+    assert_select 'input[type="file"]'
   end
   
   test "invalid micropost submission" do
@@ -32,8 +33,9 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     
     # Valid submission
     content = "Only one jour left until sunset"
+    picture = fixture_file_upload('test/fixtures/files/kitten.jpg','image/jpg', :binary )
     assert_difference "Micropost.count", 1 do
-      post microposts_path, params: {micropost: {content: content}}
+      post microposts_path, params: {micropost: {content: content, picture: picture}}
     end
     assert_redirected_to root_url
     follow_redirect!
