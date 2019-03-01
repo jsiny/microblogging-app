@@ -31,12 +31,13 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get root_url
     
-    # Valid submission
-    content = "Only one jour left until sunset"
+    # Valid submission with picture upload
+    content = "Only one hour left until sunset"
     picture = fixture_file_upload('test/fixtures/files/kitten.jpg','image/jpg', :binary )
     assert_difference "Micropost.count", 1 do
       post microposts_path, params: {micropost: {content: content, picture: picture}}
     end
+    assert @user.microposts.paginate(page: 1).first.picture?
     assert_redirected_to root_url
     follow_redirect!
     assert_match content, response.body
