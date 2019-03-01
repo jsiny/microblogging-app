@@ -4,4 +4,7 @@
     <%= f.text_area :content, placeholder: "What's on your mind?" %>
   </div>
   <%= f.submit "Post", class: "btn btn-primary" %>
+  <span class="picture">
+    <%= f.file_field :picture %>
+  </span>
 <% end %>
