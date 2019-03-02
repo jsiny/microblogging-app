@@ -5,7 +5,12 @@ class User < ApplicationRecord
   before_create :create_activation_digest
   
   validates :name, presence: true, length: {maximum: 50}
+  
   has_many :microposts, dependent: :destroy   # If a user is deleted, so are his posts
+  has_many :active_relationships, class_name: "Relationship",
+                                  foreign_key: "follower_id",
+                                  dependent: :destroy
+  
   
   # Check the adequacy of the email syntax
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
